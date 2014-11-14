@@ -1,0 +1,69 @@
+body {
+  font-family: 'Cantarell', arial, serif;
+  
+	color:white;
+	background-color: transparent;
+}
+a, pre {
+  font-family: Inconsolata;
+}
+
+#ga-table > li {
+  list-style-type: none;
+  overflow: hidden;
+}
+#ga-table > li > * {
+  display: block;
+  float: left;
+  margin: 0;
+ 
+}
+
+.c1, .c2 {
+  width: 90px;
+}
+input {
+  display: block;
+}
+.note {
+  
+  color: #777;
+}
+.weeklyReport{
+    
+    
+    
+    
+}
+.clsIframe{
+
+  /*background-color:#525252;*/
+  font-color:white;
+  
+  
+}
+
+.clsframeRow{
+  
+  vertical-align: top;
+  /*
+  background-color:#525252;
+  padding-top: 10px; 
+  */
+  font-color:white;
+  font-size: 16px;
+  
+  
+}
+
+.header {
+
+height:1060px;
+ background-repeat: no-repeat;
+background: url("./header_background.jpg");
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: 1920px 1060px;
+
+}

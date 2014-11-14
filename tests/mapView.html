@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" class="devsite">
+<head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {'packages': ['table', 'map', 'corechart']});
+      google.setOnLoadCallback(initialize);
+
+      function initialize() {
+        // The URL of the spreadsheet to source data from.
+        var query = new google.visualization.Query(
+            'https://spreadsheets.google.com/pub?key=pCQbetd-CptF0r8qmCOlZGg');
+        query.send(draw);
+      }
+
+      function draw(response) {
+        if (response.isError()) {
+          alert('Error in query');
+        }
+
+        var ticketsData = response.getDataTable();
+        var chart = new google.visualization.ColumnChart(
+            document.getElementById('chart_div'));
+        chart.draw(ticketsData, {'isStacked': true, 'legend': 'bottom',
+            'vAxis': {'title': 'Zipcode'}});
+
+        var geoData = google.visualization.arrayToDataTable([
+          ['Lat', 'Lon', 'Name', 'Food?'],
+          
+		  [36.0827, -97.1778, 'Somewhere in America', false],
+		  [41.5687, -88.2004, 'Another place in America', false],
+          [40.2748, -111.7142, 'Yet Another place in America', false],
+		  [36.0262, -95.7750, 'Yet Another place in America', false],
+		  [29.8913, -97.9433, 'Somewhere else in America', false]]);
+		  
+
+        var geoView = new google.visualization.DataView(geoData);
+        geoView.setColumns([0, 1]);
+
+        var table =
+            new google.visualization.Table(document.getElementById('table_div'));
+        table.draw(geoData, {showRowNumber: false});
+
+        var map =
+            new google.visualization.Map(document.getElementById('map_div'));
+        map.draw(geoView, {showTip: true});
+
+        // Set a 'select' event listener for the table.
+        // When the table is selected, we set the selection on the map.
+        google.visualization.events.addListener(table, 'select',
+            function() {
+              map.setSelection(table.getSelection());
+            });
+
+        // Set a 'select' event listener for the map.
+        // When the map is selected, we set the selection on the table.
+        google.visualization.events.addListener(map, 'select',
+            function() {
+              table.setSelection(map.getSelection());
+            });
+      }
+    </script>
+  </head>
+  <body topmargin="0">
+  <table border=1>
+	<tr>
+		<td colspan=2><h2 id="full_html_page_example">Full HTML Page Example</h2>
+			An end-to-end example for creating a web page with visualization charts embedded in it. It also demonstrates a chart connected to <a href="/chart/interactive/docs/spreadsheets">Google Spreadsheets</a> and two charts interacting using visualization <a href="/chart/interactive/docs/events">Events</a>.
+		</td>
+	</tr>
+      <tr valign="top">
+        <td>
+          <div id="map_div" style="width: 1500px; height: 900px;"></div>
+        </td>
+        <td style="width: 50%;">
+          <div id="table_div"></div>
+        </td>
+      </tr>
+      <tr>
+        <td colSpan=2>
+          <div id="chart_div" style="align: center; width: 700px; height: 300px;"></div>
+        </td>
+      </tr>
+    </table>
+	
+</body>
+</html>

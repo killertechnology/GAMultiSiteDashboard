@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>Iframe Test</title>
+  <link rel="stylesheet" type="text/css"      href="//fonts.googleapis.com/css?family=Cantarell|Inconsolata">
+	<link rel="stylesheet" type="text/css"      href="./google-api-js/analytics/v3/pretty.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+
+  <script type="text/javascript">
+
+
+	var clientId = '190730675266-khuda0vc84f3h3ia1n580so1fsej40ki.apps.googleusercontent.com';
+	var apiKey = 'AIzaSyBoYc76Sng3ZgHGJv7VImg_HWgdn5VAtN4';
+	var scopes = 'https://www.googleapis.com/auth/analytics.readonly';
+
+	var authToken = '5cf85914bfdcf1faa18783323cafc66483f01e3abd8c1fb';
+
+  function getNewRelicResults() {
+
+	      //console.log('Token Value:' + authToken.access_token);
+	      
+	      var request = $.ajax({
+	          url: "https://api.newrelic.com/v2/servers/2360982.json",
+	          type: "GET",    
+	          headers: {
+	           	"X-Api-Key": authToken
+	          },
+	          
+	          dataType: "json"
+	      });
+
+	      request.done(function(msg) {
+
+	      	console.log('Request has been sent');
+	          //console.log('api call has been completed.');
+	          /*
+	          _realtimeVisitors = eval(msg.totalsForAllResults["rt:ActiveVisitors"]);
+	          
+	          var data = google.visualization.arrayToDataTable([
+	                  ['Label', 'Value'],
+	                  ['Visits', _realtimeVisitors]
+	                ]);
+
+	          var options = {
+	            max: 75,
+	            width: 95, 
+	            height: 95,
+	            redFrom: 65, redTo: 75,
+	            yellowFrom:55, yellowTo: 65,
+	            minorTicks: 4
+	          };
+
+	          //console.log('Chart Div IframeIndex: ' + whichIndex);
+	          var chart = new google.visualization.Gauge(document.getElementById('chart_div'+whichIndex));
+	          chart.draw(data, options);
+			*/
+	      });
+
+	      request.fail(function(jqXHR, textStatus) {
+	          console.log( "Request failed: " + textStatus );
+	      });
+
+    }
+
+
+	</script>
+<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+</head>
+<body topmargin=0 leftmargin=0 rightmargin=0 style="background-color:#000000;">
+
+<table border=0 cellpadding=0 cellspacing=0 width='100%' >
+
+<tr style="height:1px;">
+	<td width=100>&nbsp;</td>
+	<td><span style="padding-left:235px;"><b>Visits last 30 min.</b></span><span style="padding-left:1005px;"><b>Visits last 24 hours</b></span></td>
+</tr>
+<tr>
+	<td id="gauge0"><div id='chart_div0' ></div></td>
+	<td id="iframe0"></td>
+</tr>
+
+</table>
+<button id="authorize-button" onclick="javascript:getNewRelicResults();return false;">GetData</button>
+
+
+</body>
+</html>

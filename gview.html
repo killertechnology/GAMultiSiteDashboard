@@ -1,0 +1,66 @@
+<!DOCTYPE>
+<html>
+<head>
+    <title>Core Reporting</title>
+    <link rel="stylesheet" type="text/css"      href="//fonts.googleapis.com/css?family=Cantarell|Inconsolata">
+    <link rel="stylesheet" type="text/css"      href="./styles/pretty.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="./scripts/gaAuth.js"></script>
+    <script type="text/javascript" src="./scripts/canvasjs.min.js"></script>
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script src="./scripts/core_reporting_api_v3_reference.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+    <meta http-equiv="refresh" content="600">
+</head>
+<body  topmargin=0 leftmargin=0 rightmargin=0 >
+<table border=0 cellpadding=0 cellspacing=0 id="tblSiteData" width="100%">
+    <tr >
+        <td valign=top class="clsframeRow" width=1>
+            <div style='font-size:17px;width:300px;' id="siteName"></div>
+            <div style='font-size:25px;text-align:left;' id="totalVisitsCount"></div>
+            <div style='font-size:15px;text-align:left;' id="totalPVCount"></div>
+        </td>
+        <td align=left valign=top width=300><div id="pieChartContainer" style="height: 140px; width: 200px;"></div></td>
+        <td align=left valign=top width=1><div id="chartContainer2" style="height: 131px; width: 850px;"></div></td>
+        <td valign=top width=20>&nbsp;</td>
+        <td align=left valign=top><div id="chartContainer" style="height: 131px; width: 300px;"></div></td>
+        <td align=left valign=bottom>
+            <table border=0 cellpadding=0 cellspacing=0 style="width:100%;">
+                <tr id="tblWeeklyChart"></tr>
+            </table>
+        </td>
+    </tr>
+    <table>
+        <button id="authorize-button" style="visibility: hidden">Authorize</button>
+        <div id="hiddenstuff" style="display:none;">
+            <ul id="ga-table">
+                <select id="table-id" name="table-id" class="c2" style="width:300px;">
+                    <option value="ga:58438443">blog.deutschinc.com</option>
+                    <option value="ga:19944780">www.deutschinc.com</option>
+                    <option value="ga:78146136" >www.emeraldnuts.com</option>
+                    <option value="ga:81586408" >www.diamondnuts.com</option>
+                    <option value="ga:79231336" selected>www.fuelcaster.com</option>
+                    <option value="ga:84703884">DPREP.ME</option>
+                    <option value="ga:72135594">Smiledrive - App Traffic</option>
+                    <option value="ga:57178418">www.realcaliforniamilk.com</option>
+                    <option value="ga:57148159">partofyourfamily.realcaliforniamilk.com</option>
+                    <option value="ga:57106958">pairsavvy.realcaliforniamilk.com</option>
+                    <option value="ga:17050407">connects.anthem.com</option>
+                    <option value="ga:65838431">Pop Secret Labs</option>
+                    <option value="ga:72782537">www.popsecret.com</option>
+                    <option value="ga:70059704">Smiledrive - smiledrive.vw.com/trip</option>
+                    <option value="ga:51186836">mk8testingfacility.nintendo.com</option>
+                </select>
+
+                <li><p class="c1">Start Date:</p><input id="start-date" class="c2"></input></li>
+                <li><p class="c1">End Date:</p><input id="end-date" class="c2"></input></li>
+            </ul>
+            <button id="run-demo-button" style="visibility: hidden">Run Demo</button>
+        </div>
+        <div id="output"></div>
+
+
+
+
+</body>
+</html>

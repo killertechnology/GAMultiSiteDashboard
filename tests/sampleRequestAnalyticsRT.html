@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <style>
+      #info {
+        border: 1px solid black;
+        padding: 0.25em;
+      }
+    </style>
+	<link rel="stylesheet" type="text/css"      href="//fonts.googleapis.com/css?family=Cantarell|Inconsolata">
+	<link rel="stylesheet" type="text/css"      href="pretty.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    </head>
+  <body>
+<!--Add a button for the user to click to initiate auth sequence -->
+    <button id="authorize-button" style="visibility: hidden">Authorize</button>
+    <script type="text/javascript">
+
+      var clientId = '190730675266-khuda0vc84f3h3ia1n580so1fsej40ki';
+      var apiKey = 'AIzaSyBoYc76Sng3ZgHGJv7VImg_HWgdn5VAtN4';
+      var scopes = 'https://www.googleapis.com/auth/analytics.readonly';
+
+      function handleClientLoad() {
+        // Step 2: Reference the API key
+        gapi.client.setApiKey(apiKey);
+        window.setTimeout(checkAuth,1);
+      }
+
+      function checkAuth() {
+        gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
+      }
+
+      var authToken = '';
+      function handleAuthResult(authResult) {
+        var authorizeButton = document.getElementById('authorize-button');
+        authToken = authResult;
+        if (authResult && !authResult.error) {
+          authorizeButton.style.visibility = 'hidden';
+          makeApiCall();
+        } else {
+          authorizeButton.style.visibility = '';
+          authorizeButton.onclick = handleAuthClick;
+        }
+      }
+
+      function handleAuthClick(event) {
+        // Step 3: get authorization to use private data
+        gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuthResult);
+        return false;
+      }
+
+      // Load the API and make an API call.  Display the results on the screen.
+      function makeApiCall() {
+
+        // Step 4: Load the Google+ API
+        gapi.client.load('plus', 'v1', function() {
+          // Step 5: Assemble the API request
+          var request = gapi.client.plus.people.get({
+            'userId': 'me'
+          });
+          // Step 6: Execute the API request
+          request.execute(function(resp) {
+            var heading = document.createElement('h4');
+            var image = document.createElement('img');
+            image.src = resp.image.url;
+            heading.appendChild(image);
+            heading.appendChild(document.createTextNode(resp.displayName));
+
+            document.getElementById('content').appendChild(heading);
+          });
+        });
+
+        console.log('user is logged in');
+        makeAnalyticsCall();
+      }
+
+
+      function makeAnalyticsCall() {
+
+    		console.log('Token Value:' + authToken.access_token);
+    		
+    		var request = $.ajax({
+    		    url: "https://content.googleapis.com/analytics/v3/data/realtime?ids=ga%3A79231336&metrics=rt%3AActiveVisitors&key=" + apiKey,
+    		    type: "GET",    
+    		    headers: {
+    		    	authorization:  'Bearer ' + authToken.access_token
+    		    },
+    		    
+    		    dataType: "json"
+    		});
+
+    		request.done(function(msg) {
+    			console.log('api call has been completed.')
+    		    $("#mybox").html(msg.rows[0]);          
+    		});
+
+    		request.fail(function(jqXHR, textStatus) {
+    		    console.log( "Request failed: " + textStatus );
+    		});
+
+      }
+
+    </script>
+    <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+<div id="content"></div><hr />
+    <div id="mybox"></div>
+    </body>
+</html>
